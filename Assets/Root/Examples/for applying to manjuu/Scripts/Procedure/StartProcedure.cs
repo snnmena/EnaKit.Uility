@@ -17,7 +17,7 @@ namespace Yoziya.manjuu
 
         public override void Exit()
         {
-            
+            Debug.Log("结束");
         }
 
         public override void Update()

@@ -1,9 +1,21 @@
-﻿using System;
+﻿using OfficeOpenXml.FormulaParsing.Excel.Functions.DateTime;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Yoziya
 {
+    public interface IApp
+    {
+        T GetSystem<T>() where T : class, ISystem;
+        T GetModel<T>() where T : class, IModel;
+        void SendCommand<T>(T command) where T : ICommand;
+        //TResult SendCommand<TResult>(ICommand<TResult> command);
+        void SendEvent<T>() where T : new();
+        void SendEvent<T>(T e);
+        //IUnRegister RegisterEvent<T>(Action<T> onEvent);
+        //void UnRegisterEvent<T>(Action<T> onEvent);
+    }
     public class App : MonoBehaviour
     {
         private IOCContainer mContainer;
@@ -34,7 +46,17 @@ namespace Yoziya
         {
             mProcedureManager.UpdateProcedure();
         }
-        
+        public void RegisterSystem<TSystem>(TSystem system) where TSystem : ISystem
+        {
+            mContainer.Register<TSystem>(system);
+            mSystems.Add(system);
+        }
+
+        public void RegisterModel<TModel>(TModel model) where TModel : IModel
+        {
+            mContainer.Register<TModel>(model);
+            mModels.Add(model);
+        }
         public void ChangeProcedure(IProcedure procedure)
         {
             mProcedureManager.ChangeProcedure(procedure);
