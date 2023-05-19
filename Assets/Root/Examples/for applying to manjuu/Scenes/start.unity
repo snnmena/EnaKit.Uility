@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 1579255521}
   - component: {fileID: 1579255520}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -503,3 +503,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c520f942bc836c43989f78c188ac308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mUI: {fileID: 1579255523}

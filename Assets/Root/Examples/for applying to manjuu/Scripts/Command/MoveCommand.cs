@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Yoziya
+namespace Yoziya.manjuu
 {
     public class MoveCommand : ICommand
     {

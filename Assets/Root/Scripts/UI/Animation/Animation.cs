@@ -8,9 +8,9 @@ namespace Yoziya
     static public class Animation
     {
 
-        static public void Move(this UIController target, Vector2 end)
-        {
-            target.gameObject.GetComponent<RectTransform>();
-        }
+        //    static public void Move(this UIController target, Vector2 end)
+        //    {
+        //        target.gameObject.GetComponent<RectTransform>();
+        //    }
     }
 }

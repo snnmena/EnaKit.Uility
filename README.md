@@ -8,45 +8,27 @@
 
 ## 当前实现思路
 
-### App : MonoBehaviour
+**Pawn : MonoBehaviour, IPawn**
 
-- Awake()
-- Start()
-  - 注册IModel
-  - 配置Procedure
-- FixUpdate()
-  - 更新游戏逻辑
+- 定义物体对象，以及它能做什么
 
-### IProcedure
+**Controller : MonoBehaviour, IController**
 
-ResourceManager
+- 能订阅事件，控制游戏对象在收到什么事件时发送命令让Pawn执行
 
-### IModel
+**Mode : IMode**
 
-- SendEvent<IEvent>
+- 定义游戏规则
+- 能获取其他Mode、State，能订阅和发送事件
 
-ConfigManager
+**State : IState**
 
-### ISystem
+- 数据层、状态层
+- 能发送事件
 
-- GetModel<IModel>
-- SubscribeEvent<IEvent>
-- SendEvent<IEvent>
+**Event**
 
-### IController
-
-- GetModel<IModel>
-- GetSystem<ISystem>
-- SubscribeEvent<IEvent>
-
-- SendCommand<ICommand>
-  - 更改 ISystem、IModel
-
-Controller : MonoBehaviour, IController
-
-### IEvent
-
-### ICommand
+**Command**
 
 ## 版本更新
 

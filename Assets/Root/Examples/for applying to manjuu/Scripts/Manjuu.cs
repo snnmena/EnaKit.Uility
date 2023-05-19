@@ -4,16 +4,17 @@ using UnityEngine;
 
 namespace Yoziya.manjuu
 {
-    public class Manjuu : App
+    public class Manjuu : MonoBehaviour
     {
-        protected override void Awake()
+        protected void Awake()
         {
-            base.Awake();
         }
-        protected override void Start()
+        protected void Start()
         {
-            base.Start();
-            ChangeProcedure(new StartProcedure());
+        }
+        public static void SetUI<T>(GameObject a) where T : AbstractController
+        {
+
         }
     }
 }
