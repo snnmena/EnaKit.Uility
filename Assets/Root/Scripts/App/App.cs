@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static PlasticPipe.PlasticProtocol.Messages.NegotiationCommand;
 
 namespace Yoziya
 {
@@ -82,6 +81,9 @@ namespace Yoziya
 
     #endregion
 
+    /// <summary>
+    /// 事件系统、观察者模式
+    /// </summary>
     #region Event
 
     public interface IEvent
@@ -177,6 +179,9 @@ namespace Yoziya
 
     #endregion
 
+    /// <summary>
+    /// 命令模式
+    /// </summary>
     #region Command
 
     public interface ICommand
