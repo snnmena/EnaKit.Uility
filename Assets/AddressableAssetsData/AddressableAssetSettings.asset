@@ -36,7 +36,6 @@ MonoBehaviour:
   m_ContentStateBuildPath: 
   m_overridePlayerVersion: 
   m_GroupAssets:
-  - {fileID: 11400000, guid: 3d0967f6f70284b4aa020ffee2ebd38d, type: 2}
   - {fileID: 11400000, guid: 2dd99f11b3373684ebb86651ac7260e6, type: 2}
   - {fileID: 11400000, guid: b0b2763c80b3f3148873b69856e10892, type: 2}
   m_BuildSettings:

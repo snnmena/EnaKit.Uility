@@ -4,50 +4,92 @@ using UnityEngine;
 
 namespace Yoziya
 {
-    /// <summary>
-    /// 定义物体对象它能做什么
-    /// </summary>
-    #region Pawn
-
-    public interface IPawn
+    public interface IApp
     {
-
+        void RegisterState<T>(T state) where T : IState;
+        void RegisterMode<T>(T mode) where T : IMode;
+        T GetState<T>() where T : IState;
+        T GetMode<T>() where T : IMode;
     }
-
-    public abstract class AbstractPawn : MonoBehaviour, IPawn
+    public abstract class App<T> : IApp where T : App<T>, new()
     {
-
-    }
-
-    #endregion
-
-    /// <summary>
-    /// 能订阅事件，控制游戏对象在收到什么事件时发送命令让Pawn执行
-    /// </summary>
-    #region Controller
-
-    public interface IController
-    {
-        void Initialize();
-        void SubscribeEvent();
-        void SendCommand<T>(T command) where T : ICommand;
-    }
-
-    public abstract class AbstractController : MonoBehaviour, IController
-    {
-        private IPawn controlledPawn;
-        public void Initialize()
+        public static Action<T> OnRegisterPatch = architecture => { };
+        private static T mApp;
+        private HashSet<IState> mStatesCache = new HashSet<IState>();
+        private HashSet<IMode> mModesCache = new HashSet<IMode>();
+        private IOCContainer mContainer = new IOCContainer();
+        public static IApp Interface
         {
-            controlledPawn = gameObject.GetComponent<IPawn>();
+            get
+            {
+                if (mApp == null)
+                {
+                    mApp = new T();
+                    mApp.Initialize();
+                    OnRegisterPatch?.Invoke(mApp);
+                    foreach (var architectureModel in mApp.mStatesCache)
+                    {
+                        architectureModel.Initialize();
+                    }
+                    mApp.mStatesCache.Clear();
+                    foreach (var architectureSystem in mApp.mModesCache)
+                    {
+                        architectureSystem.Initialize();
+                    }
+                    mApp.mModesCache.Clear();
+                }
+                return mApp;
+            }
         }
-        public void SendCommand<TCommand>(TCommand command) where TCommand : ICommand
-        {
-            command.Execute();
-        }
-        public void SubscribeEvent()
+
+        public void RegisterState<T>(T state) where T : IState
         {
             throw new NotImplementedException();
         }
+        public void RegisterMode<T>(T mode) where T : IMode
+        {
+            mode.SetArchitecture(this);
+            mContainer.Register<T>(mode);
+            mModesCache.Add(mode);
+        }
+        public T GetState<T>() where T : IState
+        {
+            throw new NotImplementedException();
+        }
+        public T GetMode<T>() where T : IMode
+        {
+            throw new NotImplementedException();
+        }
+        protected abstract void Initialize();
+    }
+
+    /// <summary>
+    /// 数据层、状态层
+    /// 能发送事件
+    /// </summary>
+    #region State
+
+    public interface IState : IBelongToApp, ICanSetApp
+    {
+        void Initialize();
+    }
+
+    public abstract class State : IState
+    {
+        private IApp mApp;
+        IApp IBelongToApp.GetApp()
+        {
+            return mApp;
+        }
+        void ICanSetApp.SetArchitecture(IApp app)
+        {
+            mApp = app;
+        }
+        void IState.Initialize()
+        {
+            OnInit();
+        }
+        protected abstract void OnInit();
     }
 
     #endregion
@@ -58,32 +100,89 @@ namespace Yoziya
     /// </summary>
     #region Mode
 
-    public interface IMode
+    public interface IMode : IBelongToApp, ICanSetApp
     {
-        void GetMode<T>() where T : IMode;
-        void GetState<T>() where T : IState;
-        void SubscribeEvent();
-        void SendEvent();
+        void Initialize();
+    }
+
+    public abstract class Mode : IMode
+    {
+        private IApp mApp;
+        IApp IBelongToApp.GetApp()
+        {
+            return mApp;
+        }
+        void ICanSetApp.SetArchitecture(IApp app)
+        {
+            mApp = app;
+        }
+        void IMode.Initialize()
+        {
+            OnInit();
+        }
+        protected abstract void OnInit();
     }
 
     #endregion
 
     /// <summary>
-    /// 数据层、状态层
-    /// 能发送事件
+    /// 定义游戏对象，以及它能做什么，能订阅事件，控制游戏对象在收到什么事件时执行Command
     /// </summary>
-    #region State
+    #region Controller
 
-    public interface IState
+    public interface IController
     {
-        void SendEvent();
+        void Initialize();
+    }
+
+    public abstract class AbstractController : MonoBehaviour, IController
+    {
+        public void Initialize()
+        {
+
+        }
     }
 
     #endregion
 
-    /// <summary>
-    /// 事件系统、观察者模式
-    /// </summary>
+    #region Solution
+
+    public interface ISolution
+    {
+
+    }
+
+    #endregion
+
+    #region Rule
+
+    public interface IBelongToApp
+    {
+        IApp GetApp();
+    }
+    public interface ICanSetApp
+    {
+        void SetArchitecture(IApp app);
+    }
+
+    public interface ICanGetState : IBelongToApp { }
+    public interface ICanGetMode : IBelongToApp { }
+
+    public static class RuleExtend
+    {
+        public static T GetState<T>(this ICanGetState self) where T : class, IState
+        {
+            return self.GetApp().GetState<T>();
+        }
+
+        public static T GetMode<T>(this ICanGetMode self) where T : class, IMode
+        {
+            return self.GetApp().GetMode<T>();
+        }
+    }
+
+    #endregion
+
     #region Event
 
     public interface IEvent
@@ -179,9 +278,6 @@ namespace Yoziya
 
     #endregion
 
-    /// <summary>
-    /// 命令模式
-    /// </summary>
     #region Command
 
     public interface ICommand
