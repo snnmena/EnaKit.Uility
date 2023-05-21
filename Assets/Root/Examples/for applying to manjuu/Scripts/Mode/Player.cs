@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Yoziya.manjuu
 {
-    public class Manjuu : App<Manjuu>
+    public class Achievement : Mode
     {
-        protected override void Initialize()
+        protected override void OnInit()
         {
-            RegisterState<Player>(new Player());
+            
         }
     }
 }

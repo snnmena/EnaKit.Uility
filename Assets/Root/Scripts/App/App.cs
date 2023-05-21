@@ -8,8 +8,8 @@ namespace Yoziya
     {
         void RegisterState<T>(T state) where T : IState;
         void RegisterMode<T>(T mode) where T : IMode;
-        T GetState<T>() where T : IState;
-        T GetMode<T>() where T : IMode;
+        T GetState<T>() where T : class, IState;
+        T GetMode<T>() where T : class, IMode;
     }
     public abstract class App<T> : IApp where T : App<T>, new()
     {
@@ -44,7 +44,9 @@ namespace Yoziya
 
         public void RegisterState<T>(T state) where T : IState
         {
-            throw new NotImplementedException();
+            state.SetArchitecture(this);
+            mContainer.Register<T>(state);
+            mStatesCache.Add(state);
         }
         public void RegisterMode<T>(T mode) where T : IMode
         {
@@ -52,13 +54,13 @@ namespace Yoziya
             mContainer.Register<T>(mode);
             mModesCache.Add(mode);
         }
-        public T GetState<T>() where T : IState
+        public T GetState<T>() where T : class, IState
         {
-            throw new NotImplementedException();
+            return mContainer.Get<T>();
         }
-        public T GetMode<T>() where T : IMode
+        public T GetMode<T>() where T : class, IMode
         {
-            throw new NotImplementedException();
+            return mContainer.Get<T>();
         }
         protected abstract void Initialize();
     }
@@ -100,7 +102,7 @@ namespace Yoziya
     /// </summary>
     #region Mode
 
-    public interface IMode : IBelongToApp, ICanSetApp
+    public interface IMode : IBelongToApp, ICanSetApp, ICanGetMode
     {
         void Initialize();
     }
@@ -130,17 +132,9 @@ namespace Yoziya
     /// </summary>
     #region Controller
 
-    public interface IController
+    public interface IController : ICanGetMode, ICanGetState
     {
         void Initialize();
-    }
-
-    public abstract class AbstractController : MonoBehaviour, IController
-    {
-        public void Initialize()
-        {
-
-        }
     }
 
     #endregion
