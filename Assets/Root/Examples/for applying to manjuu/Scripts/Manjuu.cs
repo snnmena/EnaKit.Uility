@@ -9,6 +9,8 @@ namespace Yoziya.manjuu
         protected override void Initialize()
         {
             RegisterState<Player>(new Player());
+
+            RegisterMode<InputSystem>(new InputSystem());
         }
     }
 }

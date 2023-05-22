@@ -19,8 +19,8 @@ namespace Yoziya
         protected override void Start()
         {
             mTransform = GetComponent<RectTransform>();
-            OnWorldClicked.AddListener(position => { Debug.Log(position); });
-            OnCanvasClicked.AddListener(position => { Debug.Log(position.x); });
+            //OnWorldClicked.AddListener(position => { Debug.Log(position); });
+            //OnCanvasClicked.AddListener(position => { Debug.Log(position.x); });
         }
 
         public void OnPointerClick(PointerEventData eventData)

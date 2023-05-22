@@ -3,18 +3,16 @@ using UnityEngine;
 
 namespace Yoziya.manjuu
 {
-    public class AbstractController : MonoBehaviour, IController
+    public abstract class AbstractController : MonoBehaviour, IController
     {
-        private IPlayer mState;
-        public void Initialize()
+        private IOCContainer mContainer = new IOCContainer();
+        public virtual void Initialize()
         {
 
         }
         void Start()
         {
-            mState = this.GetState<Player>();
-            mState.Score.AddListener(a => Debug.Log(mState.Score.Value));
-            mState.Score.Value++;
+            Register();
         }
         public IApp GetApp()
         {
@@ -23,8 +21,9 @@ namespace Yoziya.manjuu
 
         private void OnDestroy()
         {
-            // 8. 将 Model 设置为空
-            mState = null;
+            UnRegister();
         }
+        abstract public void Register();
+        abstract public void UnRegister();
     }
 }
