@@ -89,9 +89,9 @@ namespace Yoziya
         }
         void IState.Initialize()
         {
-            OnInit();
+            Init();
         }
-        protected abstract void OnInit();
+        protected abstract void Init();
     }
 
     #endregion
@@ -120,9 +120,9 @@ namespace Yoziya
         }
         void IMode.Initialize()
         {
-            OnInit();
+            Init();
         }
-        protected abstract void OnInit();
+        protected abstract void Init();
     }
 
     #endregion

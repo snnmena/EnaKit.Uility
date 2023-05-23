@@ -12,7 +12,7 @@ namespace Yoziya.manjuu
     public class Player : State, IPlayer
     {
         public OnEventProperty<int> Score { get; } = new OnEventProperty<int>();
-        protected override void OnInit()
+        protected override void Init()
         {
             Score.Value = 0;
         }

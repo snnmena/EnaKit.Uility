@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace Yoziya
 {
     public class OnEventProperty<T> where T : IEquatable<T>
     {
-        private Action<T> OnValueChanged;
+        private event Action<T> OnValueChanged;
         public T Value
         {
             get => mValue;

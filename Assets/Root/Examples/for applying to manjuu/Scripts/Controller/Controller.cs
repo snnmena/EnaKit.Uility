@@ -3,9 +3,8 @@ using UnityEngine;
 
 namespace Yoziya.manjuu
 {
-    public abstract class AbstractController : MonoBehaviour, IController
+    public abstract class Controller : MonoBehaviour, IController
     {
-        private IOCContainer mContainer = new IOCContainer();
         public virtual void Initialize()
         {
 
@@ -23,7 +22,7 @@ namespace Yoziya.manjuu
         {
             UnRegister();
         }
-        abstract public void Register();
-        abstract public void UnRegister();
+        abstract protected void Register();
+        abstract protected void UnRegister();
     }
 }

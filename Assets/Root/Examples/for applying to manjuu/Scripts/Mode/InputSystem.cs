@@ -6,7 +6,7 @@ namespace Yoziya.manjuu
 {
     public class InputSystem : Mode
     {
-        protected override void OnInit()
+        protected override void Init()
         {
             
         }
