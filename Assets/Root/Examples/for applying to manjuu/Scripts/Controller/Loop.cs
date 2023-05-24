@@ -21,7 +21,7 @@ namespace Yoziya.manjuu
             mInput = this.GetMode<InputSystem>();
         }
 
-        void FixedUpdate()
+        void Update()
         {
             mInput.Update();
         }
