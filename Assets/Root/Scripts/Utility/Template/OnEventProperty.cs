@@ -4,29 +4,38 @@ using System.Collections.Generic;
 
 namespace Yoziya
 {
-    public class OnEventProperty<T> where T : IEquatable<T>
+    public class OnEventProperty<T>
     {
-        private event Action<T> OnValueChanged;
+        public OnEventProperty(T value = default)
+        {
+            Value = value;
+        }
+        private event Action<T> mOnValueChanged;
         public T Value
         {
             get => mValue;
             set
             {
-                if(!mValue.Equals(value))
+                if (value == null && mValue == null) return;
+                if (value != null && !value.Equals(mValue))
                 {
                     mValue = value;
-                    OnValueChanged?.Invoke(mValue);
+                    mOnValueChanged?.Invoke(value);
                 }
             }
         }
         private T mValue = default;
+        public void SetValueWithoutEvent(T newValue)
+        {
+            mValue = newValue;
+        }
         public void AddListener(Action<T> action)
         {
-            OnValueChanged += action;
+            mOnValueChanged += action;
         }
         public void RemoveListener(Action<T> action)
         {
-            OnValueChanged -= action;
+            mOnValueChanged -= action;
         }
     }
 }

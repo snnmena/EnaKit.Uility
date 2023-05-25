@@ -1,18 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameProcedure : MonoBehaviour
+namespace Yoziya.manjuu
 {
-    // Start is called before the first frame update
-    void Start()
+    public class GameProcedure : Mode
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        enum GameState
+        {
+            EnterGame,
+            CheckUpdate,
+            Start,
+        }
+        OnEventProperty<Enum> Procedure { get; }
+        protected override void Init()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

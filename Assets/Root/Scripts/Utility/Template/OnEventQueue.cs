@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Yoziya
 {
-    public class OnEventQueue<T> where T : IEquatable<T>
+    public class OnEventQueue<T>
     {
         private Queue<T> queue = new Queue<T>();
         private event Action<T> OnEnqueue;

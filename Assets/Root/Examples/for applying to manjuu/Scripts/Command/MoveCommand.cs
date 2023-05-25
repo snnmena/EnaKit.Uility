@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Yoziya.manjuu
 {
-    public class MoveCommand : ICommand
+    public class MoveCommand : Command
     {
         private Vector3 _direction;
         private Transform _transform;
@@ -24,6 +24,11 @@ namespace Yoziya.manjuu
         public void Undo()
         {
             _transform.Translate(-_direction * _speed * Time.deltaTime);
+        }
+
+        protected override void OnExecute()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
