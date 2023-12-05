@@ -1,0 +1,18 @@
+{
+  "name": "com.enakit.utility",
+  "version": "1.0.0",
+  "displayName": "EnaKit.Utility",
+  "description": "这是 EnaKit 开发过程中产生的一些的工具、拓展、模板类，除了 System、UnityEngine 不依赖其他项。",
+  "unity": "2021.3",
+  "dependencies": {
+  },
+  "keywords": ["enakit", "EnaKit"],
+  "author": {
+    "name": "Yoziya",
+    "email": "yoziya@qq.com"
+  },
+  "license": "GPL",
+  "repository": "https://github.com/yoziya/Framework",
+  "documentationUrl": "https://github.com/yoziya/Framework/blob/main/README.md",
+  "changelogUrl": "https://github.com/yoziya/Framework/blob/main/CHANGELOG.md"
+}
